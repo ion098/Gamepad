@@ -1,5 +1,4 @@
-#include "subHeads/button.hpp"
-#include "pros/rtos.hpp"
+#include "nicklib/button.hpp"
 
 Button::Button() {}
 

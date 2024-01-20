@@ -1,5 +1,7 @@
 #pragma once
 
+#include "pros/rtos.hpp"
+
 class Button {
     private:
         bool prevState = false, currState = false;
