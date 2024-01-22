@@ -8,6 +8,7 @@
 
 #include "nicklib/button.hpp"
 
+namespace nicklib {
 class Gamepad {
     private:
         // Pointer array for joysticks
@@ -46,3 +47,4 @@ class Gamepad {
          */
         void update();
 };
+} // namespace nicklib

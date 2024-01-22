@@ -1,9 +1,9 @@
 #include "nicklib/gamepad.hpp"
 
-Gamepad::Gamepad(pros::controller_id_e_t id)
+nicklib::Gamepad::Gamepad(pros::controller_id_e_t id)
     : controller(std::make_unique<pros::Controller>(id)) {}
 
-void Gamepad::update() {
+void nicklib::Gamepad::update() {
     // Guard clause against a disabled controller (during auton and semi-autons)
     // Use the B button to cancel semi autons
     if (disabled) {

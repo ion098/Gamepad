@@ -2,6 +2,7 @@
 
 #include "pros/rtos.hpp"
 
+namespace nicklib {
 class Button {
     private:
         bool prevState = false, currState = false;
@@ -29,16 +30,6 @@ class Button {
         void setStatus(bool isPressed);
 
         /**
-         * @brief Sets the button states to false
-         *
-         * @param None
-         * @return `None`
-         * @note Should only be used by gamepad class, not for general code.
-         *       To be used when running semi autons when gamepad is disabled.
-         */
-        void disable();
-
-        /**
          * @brief Casts button to boolean.
          *
          * @return True if the button is held, false otherwise.
@@ -54,3 +45,4 @@ class Button {
          */
         explicit operator int() const;
 };
+} // namespace nicklib

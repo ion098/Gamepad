@@ -1,8 +1,8 @@
 #include "nicklib/button.hpp"
 
-Button::Button() {}
+nicklib::Button::Button() {}
 
-void Button::setStatus(bool isPressed) {
+void nicklib::Button::setStatus(bool isPressed) {
     currState = isPressed;
 
     // Rising edge detection
@@ -45,13 +45,6 @@ void Button::setStatus(bool isPressed) {
     prevState = currState;
 }
 
-void Button::disable() {
-    pressed = false;
-    held = false;
-    released = false;
-    heldTime = 0;
-}
+nicklib::Button::operator bool() const { return held; }
 
-Button::operator bool() const { return held; }
-
-Button::operator int() const { return heldTime; }
+nicklib::Button::operator int() const { return heldTime; }
