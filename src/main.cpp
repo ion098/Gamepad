@@ -76,10 +76,11 @@ void autonomous() {}
  */
 void opcontrol() {
     nicklib::Gamepad gamepad(pros::E_CONTROLLER_MASTER);
-
+    std::cout << "start\n";
     while (true) {
         gamepad.update();
-        std::cout << gamepad.leftY << ' ' << gamepad.rightX << ' ' << (bool)gamepad.a << ' ' << (int)gamepad.a << '\n';
+        std::cout << gamepad.leftY << ' ' << (int)gamepad.a << '\n';
+        // std::cout << gamepad.leftY << ' ' << gamepad.rightX << ' ' << (bool)gamepad.a << ' ' << (int)gamepad.a << '\n';
         pros::delay(20);
     }
 }
