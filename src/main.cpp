@@ -61,6 +61,20 @@ void competition_initialize() {}
  */
 void autonomous() {}
 
+nicklib::Gamepad gamepad(pros::E_CONTROLLER_MASTER);
+
+std::tuple<float, float> processSticks() {
+    float forwardsVel = gamepad.leftY, turnVel = gamepad.rightX;
+
+    forwardsVel = nicklib::deadzone(forwardsVel, CONTROLLER_DEADZONE);
+    turnVel = nicklib::deadzone(turnVel, CONTROLLER_DEADZONE);
+
+    forwardsVel = nicklib::curveInput(forwardsVel, CONTROLLER_CURVE_GAIN);
+    turnVel = nicklib::curveInput(turnVel, CONTROLLER_CURVE_GAIN);
+
+    return std::make_tuple(forwardsVel, turnVel * TURN_CONST);
+}
+
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -75,12 +89,12 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-    nicklib::Gamepad gamepad(pros::E_CONTROLLER_MASTER);
+    float forwardsVel, turnVel;
     std::cout << "start\n";
     while (true) {
         gamepad.update();
-        std::cout << gamepad.leftY << ' ' << (int)gamepad.a << '\n';
-        // std::cout << gamepad.leftY << ' ' << gamepad.rightX << ' ' << (bool)gamepad.a << ' ' << (int)gamepad.a << '\n';
+        std::tie(forwardsVel, turnVel) = processSticks();
+        std::cout << forwardsVel << '\n';
         pros::delay(20);
     }
 }
