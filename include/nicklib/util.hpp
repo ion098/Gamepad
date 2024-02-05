@@ -36,5 +36,4 @@ std::vector<float> normalizeVels(std::vector<float> vels, float scale = 1.0);
  * @return the input with the deadzone applied.
  */
 float deadzone(float input, float deadzone = 0.1);
-
 } // namespace nicklib
