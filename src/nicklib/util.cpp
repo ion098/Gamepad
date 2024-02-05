@@ -1,5 +1,4 @@
 #include "nicklib/util.hpp"
-#include <cmath>
 
 /**
  * @brief Curves the input.
