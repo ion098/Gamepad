@@ -16,5 +16,8 @@ temp.errors
 *.ini
 .d/
 
+# CLion
+.idea/
+
 # MacOS
 .DS_Store
