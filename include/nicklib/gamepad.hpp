@@ -28,6 +28,7 @@ class Gamepad {
          */
         void update();
         ButtonState operator[](pros::controller_digital_e_t button);
+        float operator[](pros::controller_analog_e_t button);
         ButtonState L1{}, L2{}, R1{}, R2{}, 
         Up{}, Down{}, Left{}, Right{}, 
         X{}, B{}, Y{}, A{};
