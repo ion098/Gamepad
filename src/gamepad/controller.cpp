@@ -1,7 +1,7 @@
-#include "nicklib/gamepad.hpp"
+#include "gamepad/controller.hpp"
 
-namespace Nicklib {
-void Gamepad::updateButton(ButtonState Gamepad::* button, bool is_held) {
+namespace Gamepad {
+void Controller::updateButton(ButtonState Controller::* button, bool is_held) {
     this->*button.rising_edge = !this->*button.is_pressed && is_held;
     this->*button.falling_edge = this->*button.is_pressed && !is_held;
     this->*button.is_pressed = is_held;
@@ -13,19 +13,19 @@ void Gamepad::updateButton(ButtonState Gamepad::* button, bool is_held) {
     }
 }
 
-void Gamepad::update() {
-    this->updateButton(&Gamepad::L1);
-    this->updateButton(&Gamepad::L2);
-    this->updateButton(&Gamepad::R1);
-    this->updateButton(&Gamepad::R2);
-    this->updateButton(&Gamepad::Up);
-    this->updateButton(&Gamepad::Down);
-    this->updateButton(&Gamepad::Left);
-    this->updateButton(&Gamepad::Right);
-    this->updateButton(&Gamepad::X);
-    this->updateButton(&Gamepad::B);
-    this->updateButton(&Gamepad::Y);
-    this->updateButton(&Gamepad::A);
+void Controller::update() {
+    this->updateButton(&Controller::L1);
+    this->updateButton(&Controller::L2);
+    this->updateButton(&Controller::R1);
+    this->updateButton(&Controller::R2);
+    this->updateButton(&Controller::Up);
+    this->updateButton(&Controller::Down);
+    this->updateButton(&Controller::Left);
+    this->updateButton(&Controller::Right);
+    this->updateButton(&Controller::X);
+    this->updateButton(&Controller::B);
+    this->updateButton(&Controller::Y);
+    this->updateButton(&Controller::A);
 
     this->LeftX = this->controller.get_analog(ANALOG_LEFT_X);
     this->LeftY = this->controller.get_analog(ANALOG_LEFT_Y);
@@ -33,7 +33,7 @@ void Gamepad::update() {
     this->RightY = this->controller.get_analog(ANALOG_RIGHT_Y);
 }
 
-ButtonState Gamepad::operator[](pros::controller_digital_e_t button) {
+ButtonState Controller::operator[](pros::controller_digital_e_t button) {
     switch (button) {
         case DIGITAL_L1: return this->L1;
         case DIGITAL_L2: return this->L2;
@@ -51,7 +51,7 @@ ButtonState Gamepad::operator[](pros::controller_digital_e_t button) {
     }
 }
 
-float Gamepad::operator[](pros::controller_analog_e_t axis) {
+float Controller::operator[](pros::controller_analog_e_t axis) {
     switch (axis) {
         case ANALOG_LEFT_X: return this->LeftX;
         case ANALOG_LEFT_Y: return this->LeftY;
