@@ -1,32 +1,41 @@
 #include "nicklib/gamepad.hpp"
 
-nicklib::Button::Button(pros::controller_digital_e_t id)
-    : id(id) {}
-
-void nicklib::Button::update(bool newState) {
-    this->isPressed = !this->isHeld && newState;
-    this->isReleased = this->isHeld && !newState;
-    this->isHeld = newState;
-
-    if (this->isPressed) { this->startTime = pros::millis(); }
+namespace Nicklib {
+void Gamepad::updateButton(ButtonState Gamepad::* button, bool is_held) {
+    this->*button.rising_edge = !this->*button.is_pressed && is_held;
+    this->*button.falling_edge = this->*button.is_pressed && !is_held;
+    this->*button.is_pressed = is_held;
+    if (is_held) {
+        this->*button.last_press_time = pros::millis();
+    } else {
+        this->*button.last_release_time = pros::millis();
+    }
 }
 
-nicklib::Button::operator bool() const { return this->isHeld; }
+void Gamepad::update() {
+    this->updateButton(&Gamepad::L1);
+    this->updateButton(&Gamepad::L2);
+    this->updateButton(&Gamepad::R1);
+    this->updateButton(&Gamepad::R2);
+    this->updateButton(&Gamepad::Up);
+    this->updateButton(&Gamepad::Down);
+    this->updateButton(&Gamepad::Left);
+    this->updateButton(&Gamepad::Right);
+    this->updateButton(&Gamepad::X);
+    this->updateButton(&Gamepad::B);
+    this->updateButton(&Gamepad::Y);
+    this->updateButton(&Gamepad::A);
 
-nicklib::Button::operator int() const {
-    if (this->isHeld) return pros::millis() - this->startTime;
-    else return 0;
+    this->LeftX = this->controller.get_analog(ANALOG_LEFT_X);
+    this->LeftY = this->controller.get_analog(ANALOG_LEFT_Y);
+    this->RightX = this->controller.get_analog(ANALOG_RIGHT_X);
+    this->RightY = this->controller.get_analog(ANALOG_RIGHT_Y);
 }
 
-pros::controller_digital_e_t nicklib::Button::getID() const { return this->id; }
-
-nicklib::Gamepad::Gamepad(pros::controller_id_e_t id)
-    : pros::Controller(id) {}
-
-void nicklib::Gamepad::update() {
-    for (Button* button : this->buttons) { button->update(this->get_digital(button->getID())); }
-    leftStick = {this->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X),
-                 this->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)};
-    rightStick = {this->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X),
-                  this->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)};
+void Gamepad::operator[](pros::controller_digital_e_t button) {
+    // TODO: fill in switch
+    switch (button) {
+        default: std::exit(1); 
+    }
+}
 }
